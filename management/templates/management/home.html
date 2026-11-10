@@ -1,0 +1,249 @@
+{% extends 'management/base.html' %}
+{% load static %}
+
+{% block title %}CareHospital - Comprehensive Medical Care & Appointment Booking{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge bg-white text-primary mb-3 px-3 py-2 fw-semibold shadow-sm">
+                    <i class="bi bi-shield-check me-1"></i> Trusted Healthcare Services
+                </span>
+                <h1 class="hero-title">Your Health is Our Top Priority</h1>
+                <p class="hero-subtitle">
+                    Experience compassionate and modern medical consultation. Connect with trusted doctors, choose your preferred schedule, and book appointments easily from anywhere.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{% url 'book_appointment' %}" class="btn btn-light btn-lg text-primary fw-bold px-4 shadow">
+                        <i class="bi bi-calendar-check me-2"></i> Book Appointment
+                    </a>
+                    <a href="{% url 'doctors' %}" class="btn btn-outline-light btn-lg px-4">
+                        <i class="bi bi-people me-2"></i> View Doctors
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 d-none d-lg-block text-center">
+                <div class="p-4 bg-white bg-opacity-10 rounded-4 border border-white border-opacity-25 shadow-sm text-white">
+                    <div class="mb-3">
+                        <i class="bi bi-hospital fs-1 text-warning"></i>
+                    </div>
+                    <h3 class="fw-bold">CareHospital Center</h3>
+                    <p class="small text-white-50">Leading multi-specialty healthcare management platform providing seamless doctor-patient appointments.</p>
+                    <div class="row g-2 mt-3 pt-3 border-top border-white border-opacity-25 text-start">
+                        <div class="col-6">
+                            <h4 class="fw-bold mb-0">{{ total_doctors }}</h4>
+                            <small class="text-white-50">Verified Doctors</small>
+                        </div>
+                        <div class="col-6">
+                            <h4 class="fw-bold mb-0">5+</h4>
+                            <small class="text-white-50">Key Departments</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Stats / Introduction Section -->
+<section class="container mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-primary bg-opacity-10 text-primary p-3 me-3 fs-3">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">24/7 Availability</h5>
+                </div>
+                <p class="text-muted mb-0 small">
+                    Book consultations anytime using our responsive web portal with real-time slot checking.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-success bg-opacity-10 text-success p-3 me-3 fs-3">
+                        <i class="bi bi-award"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">Qualified Specialists</h5>
+                </div>
+                <p class="text-muted mb-0 small">
+                    Expert medical practitioners across Cardiology, Neurology, Orthopedics, and General Medicine.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-4 h-100">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="rounded-circle bg-info bg-opacity-10 text-info p-3 me-3 fs-3">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <h5 class="fw-bold mb-0">Easy Management</h5>
+                </div>
+                <p class="text-muted mb-0 small">
+                    Track upcoming appointments, approval status, and doctor profiles seamlessly from your dashboard.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Departments Section -->
+<section class="container mb-5">
+    <div class="text-center mb-4">
+        <span class="text-primary fw-bold text-uppercase small">Specialized Care</span>
+        <h2 class="fw-bold text-dark">Our Medical Departments</h2>
+        <p class="text-muted">Dedicated clinical departments equipped to deliver the highest quality care.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4 col-lg-2-4 col-sm-6">
+            <div class="card text-center p-3 h-100">
+                <div class="text-danger mb-2 fs-2"><i class="bi bi-heart-pulse"></i></div>
+                <h6 class="fw-bold mb-1">Cardiology</h6>
+                <p class="text-muted small mb-0">Heart & vascular care</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-2-4 col-sm-6">
+            <div class="card text-center p-3 h-100">
+                <div class="text-primary mb-2 fs-2"><i class="bi bi-brain"></i></div>
+                <h6 class="fw-bold mb-1">Neurology</h6>
+                <p class="text-muted small mb-0">Brain & nervous system</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-2-4 col-sm-6">
+            <div class="card text-center p-3 h-100">
+                <div class="text-warning mb-2 fs-2"><i class="bi bi-bandaid"></i></div>
+                <h6 class="fw-bold mb-1">Orthopedics</h6>
+                <p class="text-muted small mb-0">Bones & joint treatment</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-2-4 col-sm-6">
+            <div class="card text-center p-3 h-100">
+                <div class="text-info mb-2 fs-2"><i class="bi bi-droplet-half"></i></div>
+                <h6 class="fw-bold mb-1">Dermatology</h6>
+                <p class="text-muted small mb-0">Skin & aesthetic health</p>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-2-4 col-sm-6">
+            <div class="card text-center p-3 h-100">
+                <div class="text-success mb-2 fs-2"><i class="bi bi-capsule"></i></div>
+                <h6 class="fw-bold mb-1">General Medicine</h6>
+                <p class="text-muted small mb-0">Comprehensive health</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Available Doctors Section -->
+<section class="container mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <span class="text-primary fw-bold text-uppercase small">Medical Team</span>
+            <h2 class="fw-bold text-dark mb-0">Available Doctors</h2>
+        </div>
+        <a href="{% url 'doctors' %}" class="btn btn-outline-primary btn-sm fw-semibold">
+            View All Doctors <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for doctor in doctors %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card doctor-card p-3">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="doctor-avatar-placeholder me-3">
+                        {{ doctor.name|slice:":4"|cut:"Dr. "|slice:":1"|default:"D" }}
+                    </div>
+                    <div>
+                        <h5 class="doctor-name mb-1">{{ doctor.name }}</h5>
+                        <div class="doctor-department">{{ doctor.department }}</div>
+                    </div>
+                </div>
+                <ul class="list-unstyled small text-muted mb-3 flex-grow-1">
+                    <li class="mb-1"><i class="bi bi-envelope text-primary me-2"></i>{{ doctor.email }}</li>
+                    <li class="mb-1"><i class="bi bi-telephone text-primary me-2"></i>{{ doctor.phone }}</li>
+                    <li class="mb-1">
+                        <i class="bi bi-cash-stack text-success me-2"></i>
+                        <strong>Fee:</strong> ₹{{ doctor.consultation_fee }}
+                    </li>
+                </ul>
+                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle">
+                        <i class="bi bi-check-circle me-1"></i> Available
+                    </span>
+                    <a href="{% url 'book_appointment' %}?doctor={{ doctor.id }}" class="btn btn-primary btn-sm">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-4">
+            <p class="text-muted">No doctors found. Please add doctors via the admin panel or run the sample data script.</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- About Hospital Section -->
+<section class="container mb-5">
+    <div class="card p-4 p-md-5 bg-white border-0 shadow-sm">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <span class="text-primary fw-bold text-uppercase small">About Our Hospital</span>
+                <h3 class="fw-bold text-dark mt-1 mb-3">Dedicated to Delivering Compassionate Care</h3>
+                <p class="text-muted">
+                    CareHospital has served the community with high standards of clinical excellence, modern infrastructure, and compassionate patient care. Our centralized Hospital Management System connects patients directly with specialized doctors, streamlining the appointment booking and verification workflow.
+                </p>
+                <div class="row g-3 mt-2">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-2"></i>
+                            <span class="small fw-semibold">Instant Slot Verification</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-2"></i>
+                            <span class="small fw-semibold">Dynamic Patient Dashboard</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-2"></i>
+                            <span class="small fw-semibold">Admin Appointment Approvals</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success fs-5 me-2"></i>
+                            <span class="small fw-semibold">Secure Django Authentication</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mt-4 mt-lg-0 text-center">
+                <div class="p-4 bg-light rounded-4 border">
+                    <h5 class="fw-bold text-primary mb-3">Need Immediate Consultation?</h5>
+                    <p class="small text-muted mb-4">
+                        Register an account in less than a minute and schedule a direct consultation with our departmental specialists.
+                    </p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'book_appointment' %}" class="btn btn-primary px-4">Schedule Appointment</a>
+                    {% else %}
+                        <a href="{% url 'register' %}" class="btn btn-primary px-4 me-2">Create Account</a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-secondary px-4">Sign In</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

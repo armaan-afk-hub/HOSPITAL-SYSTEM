@@ -1,0 +1,109 @@
+{% extends 'management/base.html' %}
+{% load static %}
+
+{% block title %}Patient Registration - CareHospital{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card p-4 p-md-5 shadow-sm border-0">
+                <div class="text-center mb-4">
+                    <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex p-3 mb-2">
+                        <i class="bi bi-person-plus-fill fs-2"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark">Patient Registration</h3>
+                    <p class="text-muted small">Create your account to book and manage hospital appointments</p>
+                </div>
+
+                <form method="POST" novalidate class="needs-validation">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger py-2 small">
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label for="{{ form.full_name.id_for_label }}" class="form-label fw-semibold small text-muted">
+                            Full Name <span class="text-danger">*</span>
+                        </label>
+                        {{ form.full_name }}
+                        {% if form.full_name.errors %}
+                            <div class="text-danger small mt-1">{{ form.full_name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label fw-semibold small text-muted">
+                            Username <span class="text-danger">*</span>
+                        </label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold small text-muted">
+                            Email Address <span class="text-danger">*</span>
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password with Show/Hide toggle -->
+                    <div class="mb-3">
+                        <label for="regPassword" class="form-label fw-semibold small text-muted">
+                            Password <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            {{ form.password }}
+                            <button class="btn btn-outline-secondary toggle-password-btn" type="button" data-target="regPassword">
+                                <i class="bi bi-eye"></i> Show
+                            </button>
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="text-danger small mt-1">{{ form.password.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Confirm Password with Show/Hide toggle -->
+                    <div class="mb-4">
+                        <label for="regConfirmPassword" class="form-label fw-semibold small text-muted">
+                            Confirm Password <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            {{ form.confirm_password }}
+                            <button class="btn btn-outline-secondary toggle-password-btn" type="button" data-target="regConfirmPassword">
+                                <i class="bi bi-eye"></i> Show
+                            </button>
+                        </div>
+                        {% if form.confirm_password.errors %}
+                            <div class="text-danger small mt-1">{{ form.confirm_password.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm">
+                        <i class="bi bi-person-check me-2"></i> Register Account
+                    </button>
+                </form>
+
+                <div class="text-center mt-4 pt-3 border-top">
+                    <p class="small text-muted mb-0">
+                        Already have an account? <a href="{% url 'login' %}" class="fw-semibold text-primary">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

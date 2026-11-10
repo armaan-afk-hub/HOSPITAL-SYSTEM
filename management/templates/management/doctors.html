@@ -1,0 +1,112 @@
+{% extends 'management/base.html' %}
+{% load static %}
+
+{% block title %}Our Doctors - CareHospital{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h2 class="fw-bold text-dark mb-1">
+                <i class="bi bi-person-badge text-primary me-2"></i>Meet Our Medical Specialists
+            </h2>
+            <p class="text-muted mb-0">Browse through our qualified doctors, check consultation fees, and schedule visits.</p>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <a href="{% url 'book_appointment' %}" class="btn btn-primary shadow-sm">
+                <i class="bi bi-calendar-plus me-1"></i> Book an Appointment
+            </a>
+        </div>
+    </div>
+
+    <!-- Search and Filter Bar (Powered by Basic JavaScript & Server-side fallback) -->
+    <div class="card p-3 mb-4 shadow-sm border-0">
+        <div class="row g-3">
+            <div class="col-md-7">
+                <div class="input-group">
+                    <span class="input-group-text bg-white text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" id="doctorSearchInput" class="form-control"
+                           placeholder="Search doctor by name or specialty..." value="{{ search_query }}">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <select id="doctorDepartmentFilter" class="form-select">
+                    <option value="">All Clinical Departments</option>
+                    {% for dept in departments %}
+                        <option value="{{ dept }}" {% if selected_dept == dept %}selected{% endif %}>{{ dept }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctors Grid -->
+    <div class="row g-4" id="doctorsContainer">
+        {% for doctor in doctors %}
+        <div class="col-md-6 col-lg-4 doctor-item-card" data-name="{{ doctor.name }}" data-department="{{ doctor.department }}">
+            <div class="card doctor-card p-4 h-100">
+                <div class="d-flex align-items-start justify-content-between mb-3">
+                    <div class="doctor-avatar-placeholder">
+                        {{ doctor.name|slice:":4"|cut:"Dr. "|slice:":1"|default:"D" }}
+                    </div>
+                    {% if doctor.available %}
+                        <span class="badge bg-success-subtle text-success border border-success-subtle">
+                            <i class="bi bi-check-circle-fill me-1"></i> Available
+                        </span>
+                    {% else %}
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle">
+                            <i class="bi bi-x-circle-fill me-1"></i> Unavailable
+                        </span>
+                    {% endif %}
+                </div>
+
+                <h5 class="doctor-name mb-1">{{ doctor.name }}</h5>
+                <p class="doctor-department mb-3">{{ doctor.department }}</p>
+
+                <div class="bg-light p-3 rounded-3 mb-3 small">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted"><i class="bi bi-envelope me-1"></i> Email:</span>
+                        <span class="fw-medium text-dark text-truncate ms-2" style="max-width: 160px;">{{ doctor.email }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="text-muted"><i class="bi bi-telephone me-1"></i> Phone:</span>
+                        <span class="fw-medium text-dark">{{ doctor.phone }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted"><i class="bi bi-cash me-1"></i> Consultation Fee:</span>
+                        <span class="fw-bold text-success">₹{{ doctor.consultation_fee }}</span>
+                    </div>
+                </div>
+
+                <div class="mt-auto">
+                    {% if doctor.available %}
+                        <a href="{% url 'book_appointment' %}?doctor={{ doctor.id }}" class="btn btn-primary w-100">
+                            <i class="bi bi-calendar-check me-1"></i> Book Appointment
+                        </a>
+                    {% else %}
+                        <button class="btn btn-secondary w-100" disabled>
+                            Currently Unavailable
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="bi bi-person-x fs-1 text-muted"></i>
+            <h5 class="fw-bold mt-2">No doctors currently registered</h5>
+            <p class="text-muted">Doctors will appear here once added by the hospital administrator.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Hidden Message when JavaScript search finds zero results -->
+    <div id="noDoctorsMessage" class="text-center py-5" style="display: none;">
+        <i class="bi bi-search fs-1 text-muted"></i>
+        <h5 class="fw-bold mt-2">No matching doctors found</h5>
+        <p class="text-muted">Try searching with a different doctor name or selecting another department.</p>
+    </div>
+</div>
+{% endblock %}
+

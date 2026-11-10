@@ -1,0 +1,81 @@
+{% extends 'management/base.html' %}
+{% load static %}
+
+{% block title %}Login - CareHospital{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card p-4 p-md-5 shadow-sm border-0">
+                <div class="text-center mb-4">
+                    <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-inline-flex p-3 mb-2">
+                        <i class="bi bi-box-arrow-in-right fs-2"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark">Portal Login</h3>
+                    <p class="text-muted small">Sign in as a Patient or Administrator</p>
+                </div>
+
+                <form method="POST" novalidate class="needs-validation">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger py-2 small">
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label fw-semibold small text-muted">
+                            Username <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted"><i class="bi bi-person"></i></span>
+                            <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username"
+                                   maxlength="150" required id="id_username" class="form-control" placeholder="Enter username">
+                        </div>
+                        {% if form.username.errors %}
+                            <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password with Show/Hide toggle -->
+                    <div class="mb-4">
+                        <label for="id_password" class="form-label fw-semibold small text-muted">
+                            Password <span class="text-danger">*</span>
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-muted"><i class="bi bi-lock"></i></span>
+                            <input type="password" name="password" autocomplete="current-password" required
+                                   id="id_password" class="form-control" placeholder="Enter password">
+                            <button class="btn btn-outline-secondary toggle-password-btn" type="button" data-target="id_password">
+                                <i class="bi bi-eye"></i> Show
+                            </button>
+                        </div>
+                        {% if form.password.errors %}
+                            <div class="text-danger small mt-1">{{ form.password.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm">
+                        <i class="bi bi-box-arrow-in-right me-2"></i> Login to Account
+                    </button>
+                </form>
+
+                <div class="text-center mt-4 pt-3 border-top">
+                    <p class="small text-muted mb-1">
+                        New patient? <a href="{% url 'register' %}" class="fw-semibold text-primary">Create an account</a>
+                    </p>
+                    <p class="small text-muted mb-0">
+                        Hospital staff? Log in using your assigned staff credentials.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
